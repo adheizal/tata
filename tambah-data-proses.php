@@ -9,7 +9,9 @@
 	    // prepare data
 	    $info["cn"] = $user_name;
 	    $info["sn"] = $user_name;
-	    $info["objectclass"] = "inetOrgPerson";
+	    $info["objectclass"][0] = "inetOrgPerson";
+   	    $info["objectclass"][1] = "account";
+  	    $info["objectclass"][2] = "shadowAccount";
 	    $info["userPassword"] = '{SHA}' . base64_encode(pack('H*',sha1($sandi)));;
 	    $info["uid"] = $user_name;
 
@@ -19,7 +21,7 @@
 	    if ($ldap_con) {
 		    // bind with appropriate dn to give update access
 		    $data = ldap_bind($ldap_con, $ldap_dn, $ldap_pass);
-		    $data = ldap_add($ldap_con, "cn=$user_name, cn=user-group,ou=user,dc=tata,dc=com", $info);
+		    $data = ldap_add($ldap_con, "cn=$user_name, cn=user-group,ou=user,dc=ldap,dc=com", $info);
 		    echo "<script>alert('BERHASIL ....');</script>";
 		    echo "<meta http-equiv='refresh' content='0; url=index.php'>";
 		}else{
